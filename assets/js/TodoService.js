@@ -10,19 +10,25 @@ export default class TodoService {
   initializeDB() {
     db = new Dexie("todoDB");
 
-    db.version(1).stores({
-      tasks: "++id,description",
+    db.version(2).stores({
+      tasks: "++id,userId,title,completed",
     });
 
     db.on("populate", async () => {
-      await db.tasks.bulkPut([
-        { description: "Learn JavaScript", done: true },
-        { description: "Learn TypeScript", done: false },
-        { description: "Learn PWA", done: false },
-        { description: "Learn HTML5 APIs", done: false },
-      ]);
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos"
+      );
+
+      const jsonData = await response.json();
+      await db.tasks.bulkPut(jsonData);
     });
 
     db.open();
+
+    db.tasks
+      .where("userId")
+      .equals(10)
+      .filter(item => !item.completed)
+      .each((item) => console.log(item));
   }
 }
