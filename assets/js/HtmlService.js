@@ -28,12 +28,7 @@ export default class HtmlService {
     tasks.forEach((task) => this.addToHtmlList(task));
   }
 
-  getTaskId(li) {
-    return +li.getAttribute("data-item-id");
-  }
-
-  async deleteTask(li) {
-    const taskId = this.getTaskId(li);
+  async deleteTask(taskId, li) {
     await this.todoService.delete(taskId);
     li.remove();
   }
@@ -44,8 +39,7 @@ export default class HtmlService {
     await this.todoService.save(task);
   }
 
-  toggleTask(li) {
-    const taskId = this.getTaskId(li);
+  toggleTask(li, taskId) {
     li.classList.toggle(doneCssClass);
     const isDone = li.classList.contains(doneCssClass);
     this.saveTask(taskId, isDone);
@@ -57,8 +51,7 @@ export default class HtmlService {
     const span = document.createElement("span");
     const button = document.createElement("button");
 
-    li.setAttribute("data-item-id", task.id);
-    li.addEventListener("click", () => this.toggleTask(li));
+    li.addEventListener("click", () => this.toggleTask(li, task.id));
 
     if (task.done) {
       li.classList.add(doneCssClass);
@@ -69,7 +62,7 @@ export default class HtmlService {
     button.textContent = "x";
     button.addEventListener("click", (event) => {
       event.stopPropagation();
-      this.deleteTask(li);
+      this.deleteTask(task.id, li);
     });
 
     li.appendChild(span);
