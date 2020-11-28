@@ -7,7 +7,9 @@ export default class HtmlService {
     const form = document.querySelector("form");
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      console.log("submitted!");
+      console.log("submitted! Value: " + form.item.value);
+      form.reset();
+      form.item.focus();
     });
   }
 }
