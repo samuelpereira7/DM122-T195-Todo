@@ -6,15 +6,15 @@ const assetsToCache = [
   'https://cdn.jsdelivr.net/npm/dexie@3.0.3/dist/dexie.mjs',
   'https://fonts.googleapis.com/css?family=Roboto:400,700',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
-  'assets/images/pwa-logo.png',
-  'assets/js/material.min.js',
-  'assets/js/HtmlService.js',
-  'assets/js/TodoService.js',
-  'assets/css/style.css',
-  'assets/js/app.js',
-  'favicon.ico',
-  'index.html',
-  '/'
+  './assets/images/pwa-logo.png',
+  './assets/js/material.min.js',
+  './assets/js/HtmlService.js',
+  './assets/js/TodoService.js',
+  './assets/css/style.css',
+  './assets/js/app.js',
+  './favicon.ico',
+  './index.html',
+  './'
 ];
 
 function removeOldCache(key) {
