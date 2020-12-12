@@ -1,7 +1,7 @@
 {
-  "name": "PWA - Todo List",
-  "short_name": "PWA - Todo",
-  "theme_color": "#3f51b5",
+  "name": "Supermarket List",
+  "short_name": "Supermarket List",
+  "theme_color": "#318726",
   "background_color": "#fff",
   "display": "standalone",
   "scope": ".",
