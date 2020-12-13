@@ -8,11 +8,10 @@ export default class SupermarketService {
     }
 
     initializeDB() {
-        // starts database
         db = new Dexie('supermarketDB');
 
         db.version(1).stores({
-            tasks: '++id,name,price'
+            tasks: '++id,name,price,done'
         });
 
         db.on("populate", async () => {
