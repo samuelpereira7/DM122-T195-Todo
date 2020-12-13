@@ -1,16 +1,17 @@
+import HtmlService from "./HtmlService.js";
 class App {
-
   constructor() {
     this.registerServiceWorker();
+    new HtmlService();
   }
 
   registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-      const onsuccess = () => console.log('[Service Worker] Registered');
-      const onfailure = () => console.log('[Service Worker] Failed');
-    
+    if ("serviceWorker" in navigator) {
+      const onsuccess = () => console.log("[Service Worker] Registered");
+      const onfailure = () => console.log("[Service Worker] Failed");
+
       navigator.serviceWorker
-        .register('sw.js')
+        .register("sw.js")
         .then(onsuccess)
         .catch(onfailure);
     }
@@ -18,4 +19,3 @@ class App {
 }
 
 new App();
-
