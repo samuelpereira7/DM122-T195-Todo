@@ -15,6 +15,7 @@ export default class HtmlService {
       form.item.focus();
     });
   }
+
   async addTask(name, price) {
     const task = { name, price, done: false };
     const taskId = await this.supermarketService.save(task);
@@ -28,6 +29,12 @@ export default class HtmlService {
     tasks.forEach((task) => this.addToHtmlList(task));
   }
 
+  async deleteTask(li) {
+    const taskId = +li.getAttribute("data-item-id");
+    await this.supermarketService.delete(taskId);
+    li.remove();
+  }
+
   addToHtmlList(task) {
     const ul = document.querySelector("ul");
     const li = document.createElement("li");
@@ -37,6 +44,11 @@ export default class HtmlService {
     li.setAttribute("data-item-id", task.id);
     span.textContent = task.name + " - R$" + task.price;
     button.textContent = "x";
+
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      this.deleteTask(li);
+    });
 
     if (task.done) {
       li.classList.add("done");
