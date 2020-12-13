@@ -1,3 +1,4 @@
+const doneCssClass = 'done';
 export default class HtmlService {
   constructor(supermarketService) {
     this.supermarketService = supermarketService;
@@ -29,10 +30,27 @@ export default class HtmlService {
     tasks.forEach((task) => this.addToHtmlList(task));
   }
 
+  getTaskId(li) {
+    return +li.getAttribute("data-item-id");
+  }
+
   async deleteTask(li) {
-    const taskId = +li.getAttribute("data-item-id");
+    const taskId = this.getTaskId(li);
     await this.supermarketService.delete(taskId);
     li.remove();
+  }
+
+  async saveTask(taskId, isDone) {
+    const task = await this.supermarketService.get(taskId);
+    task.done = isDone;
+    await this.supermarketService.save(task);
+  }
+
+  toggleTask(li) {
+    const taskId = this.getTaskId(li);
+    li.classList.toggle(doneCssClass);
+    const isDone = li.classList.contains(doneCssClass);
+    this.saveTask(taskId, isDone);
   }
 
   addToHtmlList(task) {
@@ -42,17 +60,20 @@ export default class HtmlService {
     const button = document.createElement("button");
 
     li.setAttribute("data-item-id", task.id);
+    
+    li.addEventListener("click", () => this.toggleTask(li));
+
+    if (task.done) {
+      li.classList.add(doneCssClass);
+    }
+    
     span.textContent = task.name + " - R$" + task.price;
     button.textContent = "x";
 
     button.addEventListener("click", (event) => {
-      event.preventDefault();
+      event.stopPropagation();
       this.deleteTask(li);
     });
-
-    if (task.done) {
-      li.classList.add("done");
-    }
 
     li.appendChild(span);
     li.appendChild(button);
