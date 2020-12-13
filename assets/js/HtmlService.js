@@ -1,6 +1,8 @@
 export default class HtmlService {
-  constructor() {
+  constructor(supermarketService) {
+    this.supermarketService = supermarketService;
     this.bindFormEvent();
+    this.listTasks();
   }
 
   bindFormEvent() {
@@ -11,5 +13,10 @@ export default class HtmlService {
       form.reset();
       form.item.focus();
     });
+  }
+  
+  async listTasks() {
+    const tasks = await this.supermarketService.getAll();
+    console.log(tasks);
   }
 }
