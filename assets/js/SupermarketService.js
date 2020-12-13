@@ -12,14 +12,14 @@ export default class SupermarketService {
         db = new Dexie('supermarketDB');
 
         db.version(1).stores({
-            tasks: '++id,description'
+            tasks: '++id,name,price'
         });
 
         db.on("populate", async () => {
             await db.tasks.bulkPut([
-                { description: "farofa", price: "5", done: true },
-                { description: "arroz", price: "999", done: false },
-                { description: "feijão", price: "6", done: false }
+                { name: "farofa", price: "5", done: true },
+                { name: "arroz", price: "999", done: false },
+                { name: "feijão", price: "6", done: false }
             ]);
         });
 
