@@ -18,7 +18,11 @@ export default class SupermarketService {
             await db.tasks.bulkPut([
                 { name: "farofa", price: "5", done: true },
                 { name: "arroz", price: "999", done: false },
-                { name: "feijão", price: "6", done: false }
+                { name: "feijão", price: "6", done: false },
+                { name: "macarrão", price: "4", done: false },
+                { name: "gengibre", price: "2.5", done: false },
+                { name: "pinga", price: "1", done: false },
+                { name: "nescau", price: "10", done: false }
             ]);
         });
 
