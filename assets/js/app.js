@@ -3,6 +3,10 @@ import SupermarketService from "./SupermarketService.js";
 class App {
   constructor() {
     this.registerServiceWorker();
+    this.initialize();
+  }
+
+  initialize() {
     new HtmlService(new SupermarketService());
   }
 
