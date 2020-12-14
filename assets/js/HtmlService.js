@@ -1,8 +1,11 @@
 const doneCssClass = 'done';
+
+var totalPrice;
 export default class HtmlService {
   constructor(supermarketService) {
     this.supermarketService = supermarketService;
     this.bindFormEvent();
+    totalPrice = 0;
     this.listTasks();
   }
 
@@ -28,6 +31,7 @@ export default class HtmlService {
     const tasks = await this.supermarketService.getAll();
     console.log(tasks);
     tasks.forEach((task) => this.addToHtmlList(task));
+    this.showTotalPrice();
   }
 
   getTaskId(li) {
@@ -66,6 +70,9 @@ export default class HtmlService {
     if (task.done) {
       li.classList.add(doneCssClass);
     }
+
+    totalPrice = totalPrice + parseFloat(task.price);
+    console.log("totalPrice: " + totalPrice);
     
     span.textContent = task.name + " - R$" + task.price;
     button.textContent = "x";
@@ -78,5 +85,14 @@ export default class HtmlService {
     li.appendChild(span);
     li.appendChild(button);
     ul.appendChild(li);
+  }
+
+  showTotalPrice() {
+    const fieldset = document.querySelector("fieldset");
+    const text = document.createElement("text");
+
+    text.textContent = "total: R$" + totalPrice;
+
+    fieldset.appendChild(text);
   }
 }
